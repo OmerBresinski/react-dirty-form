@@ -29,7 +29,7 @@ const App = () => {
   }
 
   return (
-    <>
+    <div>
       <TextInput
         minLength={3}
         containerStyle={containerStyle}
@@ -46,7 +46,7 @@ const App = () => {
         onChange={handleInputChange}
         name="username" />
       <button onClick={handleSubmit}>Submit</button>
-    </>
+    </div>
   );
 }
 ```
