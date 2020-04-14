@@ -6,7 +6,7 @@ const App = () => {
   const { form, setForm, isDirty, handleInputChange, handleSubmit } = useForm(postFormToServer);
 
   useEffect(() => {
-    setForm({ username: 'ab', password: 'cd' });
+    setForm({ username: 'user1', password: 'password1' });
   }, []);
 
   function customPasswordValidation(value: string): boolean {
@@ -20,8 +20,12 @@ const App = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <TextInput
+        name="username"
+        isDirty={isDirty}
+        value={form.username}
+        onChange={handleInputChange}
         minLength={3}
-        maxLength={7}
+        maxLength={12}
         containerStyle={containerStyle}
         containerErrorStyle={containerErrorStyle}
         labelStyle={labelStyle}
@@ -29,12 +33,12 @@ const App = () => {
         inputStyle={inputStyle}
         inputErrorStyle={inputErrorStyle}
         errorMessageStyle={errorMessageStyle}
-        label="Username"
-        value={form.username}
-        isDirty={isDirty}
-        onChange={handleInputChange}
-        name="username" />
+        label="Username" />
       <TextInput
+        name="password"
+        isDirty={isDirty}
+        value={form.password}
+        onChange={handleInputChange}
         minLength={3}
         containerStyle={containerStyle}
         containerErrorStyle={containerErrorStyle}
@@ -46,11 +50,7 @@ const App = () => {
         errorMessageStyle={errorMessageStyle}
         isRequired
         isPassword
-        label="Password"
-        value={form.password}
-        isDirty={isDirty}
-        onChange={handleInputChange}
-        name="password" />
+        label="Password" />
       <button style={{ marginBlockEnd: '10px' }} onClick={handleSubmit}>Submit</button>
       <pre>{JSON.stringify(form)}</pre>
     </div>
