@@ -12,7 +12,7 @@ npm install --save react-dirty-form
 
 ## Demonstration
 
-![react-dirty-form demonstration](demo.gif)
+![react-dirty-form demonstration](demos/demo.gif)
 
 ## Usage
 

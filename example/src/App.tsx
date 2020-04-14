@@ -9,6 +9,10 @@ const App = () => {
     isReadyForPost && postFormToServer();
   }, [isReadyForPost]);
 
+  useEffect(() => {
+    setForm({ username: { value: 'omer' } });
+  }, []);
+
   const customPasswordValidation = (value: string): boolean => {
     return value.length >= 6
   }
@@ -16,6 +20,8 @@ const App = () => {
   const postFormToServer = () => {
     console.log("Sending form: ", form);
   }
+
+  console.log(form);
 
   return (
     <>
@@ -28,9 +34,8 @@ const App = () => {
         inputStyle={inputStyle}
         inputErrorStyle={inputErrorStyle}
         errorMessageStyle={errorMessageStyle}
-        isRequired
         label="Username"
-        value={form?.username?.value}
+        value={form.username?.value}
         isDirty={isDirty}
         onChange={handleInputChange}
         name="username" />
@@ -47,7 +52,7 @@ const App = () => {
         isRequired
         isPassword
         label="Password"
-        value={form?.username?.value}
+        value={form?.password?.value}
         isDirty={isDirty}
         onChange={handleInputChange}
         name="password" />

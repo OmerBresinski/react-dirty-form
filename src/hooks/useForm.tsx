@@ -18,7 +18,7 @@ type DirtyForm = { [key: string]: DirtyFormValue } | undefined;
 type Form = { [key: string]: FormValue | undefined };
 type DirtyFormValue = {
     value: string,
-    isValid: boolean
+    isValid?: boolean
 }
 type FormValue = {
     value: string
@@ -44,7 +44,7 @@ const useForm = (): FormHook => {
     const getIsFormValid = () => {
         let isValid = true;
         dirtyForm && Object.keys(dirtyForm).forEach(key => {
-            isValid = isValid && dirtyForm[key].isValid;
+            isValid = isValid && (dirtyForm[key].isValid || false);
         });
         return isValid;
     }
@@ -52,7 +52,7 @@ const useForm = (): FormHook => {
     const getFormValues = (): Form => {
         const tmpFinalForm = {};
         dirtyForm && Object.keys(dirtyForm).forEach(key => {
-            tmpFinalForm[key] = dirtyForm[key].value;
+            tmpFinalForm[key] = { value: dirtyForm[key].value };
         });
         return tmpFinalForm;
     }
