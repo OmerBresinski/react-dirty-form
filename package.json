@@ -24,7 +24,9 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^16.0.0",
+    "@types/styled-components": "^5.0.1",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.27",
