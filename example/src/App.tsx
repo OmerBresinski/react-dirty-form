@@ -21,8 +21,6 @@ const App = () => {
     console.log("Sending form: ", form);
   }
 
-  console.log(form);
-
   return (
     <>
       <TextInput
