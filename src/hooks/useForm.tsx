@@ -53,9 +53,9 @@ const useForm = (postFormToServer: PostFormToServer): FormHook => {
     }
 
     const setForm = (form: Form) => {
-        const tmpForm: Omit<DirtyForm, 'isValid'> = { ...form };
-        Object.keys(tmpForm).forEach(key => {
-            tmpForm[key] = { value: tmpForm[key], isValid: true };
+        const tmpForm: DirtyForm = {};
+        Object.keys(form).forEach(key => {
+            tmpForm[key] = { value: form[key] || '', isValid: true };
         });
         setDirtyForm(tmpForm);
     };
