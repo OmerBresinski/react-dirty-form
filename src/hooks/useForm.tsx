@@ -13,7 +13,7 @@ type IsDirty = boolean;
 type HandleInputChange = (value: string, isValid: boolean, fieldName: string) => void;
 type HandleSubmit = () => void;
 type PostFormToServer = () => void;
-type DirtyForm = { [key: string]: DirtyFormValue } | undefined;
+type DirtyForm = { [key: string]: DirtyFormValue };
 type Form = { [key: string]: string | undefined };
 type DirtyFormValue = {
     value: string,
@@ -21,7 +21,7 @@ type DirtyFormValue = {
 }
 
 const useForm = (postFormToServer: PostFormToServer): FormHook => {
-    const [dirtyForm, setDirtyForm] = useState<DirtyForm>();
+    const [dirtyForm, setDirtyForm] = useState<DirtyForm | null>(null);
     const [isDirty, setIsDirty] = useState(false);
 
     const handleInputChange: HandleInputChange = (value: string, isValid: boolean, fieldName: string) => {
@@ -45,7 +45,7 @@ const useForm = (postFormToServer: PostFormToServer): FormHook => {
     }
 
     const getFormValues = (): Form => {
-        const tmpForm = {};
+        const tmpForm: Form = {};
         dirtyForm && Object.keys(dirtyForm).forEach(key => {
             tmpForm[key] = dirtyForm[key].value;
         });

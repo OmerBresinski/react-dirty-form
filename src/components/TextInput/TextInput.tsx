@@ -2,43 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { Container, LabelText, Input, ErrorMessage } from './style';
 
 type Props = {
-    name: Name,
-    value: Value,
-    isDirty: IsDirty,
+    name: string,
+    value: string | undefined,
+    isDirty: boolean,
     onChange: OnChangeFunction,
-    label?: Label,
-    inputStyle?: Style,
-    labelStyle?: Style,
-    containerStyle?: Style,
-    inputErrorStyle?: Style,
-    labelErrorStyle?: Style,
-    errorMessageStyle?: Style,
-    containerErrorStyle?: Style,
-    minLength?: MinLength,
-    maxLength?: MaxLength,
-    isRequired?: IsRequired,
-    isPassword?: IsPassword,
+    label?: string,
+    inputStyle?: string,
+    labelStyle?: string,
+    containerStyle?: string,
+    inputErrorStyle?: string,
+    labelErrorStyle?: string,
+    errorMessageStyle?: string,
+    containerErrorStyle?: string,
+    minLength?: number,
+    maxLength?: number,
+    isRequired?: boolean,
+    isPassword?: boolean,
     customValidation?: CustomValidation
 }
 
-type Value = string | undefined;
-type IsDirty = boolean;
-type IsRequired = boolean;
-type IsPassword = boolean;
-type MinLength = number;
-type MaxLength = number;
 type OnChangeFunction = (value: string, isValid: boolean, fieldName: string) => void;
-type Name = string;
-type Label = string;
-type IsValid = boolean;
-type Style = string | undefined;
-type ErrorMessage = string;
 type CustomValidation = { validator: (value: string) => boolean, errorMessage: string };
 
 const TextInput: React.FC<Props> = (props: Props) => {
 
-    const [isValid, setIsValid] = useState<IsValid>(false);
-    const [errorMessage, setErrorMessage] = useState<ErrorMessage>('');
+    const [isValid, setIsValid] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const shouldShowError = !isValid && props.isDirty;
 
     useEffect(() => {
