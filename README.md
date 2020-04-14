@@ -71,7 +71,6 @@ const App = () => {
         isPassword
         label="Password" />
       <button style={{ marginBlockEnd: '10px' }} onClick={handleSubmit}>Submit</button>
-      <pre>{JSON.stringify(form)}</pre>
     </div>
   );
 }
