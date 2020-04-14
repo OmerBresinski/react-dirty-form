@@ -31,7 +31,7 @@ const TextInput: React.FC<Props> = (props: Props) => {
     const shouldShowError = !isValid && props.isDirty;
 
     useEffect(() => {
-        props.value && props.onChange(props.value, validate(props.value), props.name);
+        props.value !== undefined && props.onChange(props.value, validate(props.value), props.name);
     }, [props.value]);
 
 

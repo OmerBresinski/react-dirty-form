@@ -6,7 +6,7 @@ const App = () => {
   const { form, setForm, isDirty, handleInputChange, handleSubmit } = useForm(postFormToServer);
 
   useEffect(() => {
-    setForm({ username: 'user1', password: 'password1' });
+    setForm({ username: '', password: '' });
   }, []);
 
   function customPasswordValidation(value: string): boolean {
