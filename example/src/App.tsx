@@ -3,24 +3,25 @@ import { useForm, TextInput } from 'react-dirty-form';
 
 const App = () => {
 
-  const { form, setForm, isDirty, isReadyForPost, handleInputChange, handleSubmit } = useForm();
+  const { form, setForm, isDirty, handleInputChange, handleSubmit } = useForm(postFormToServer);
 
   useEffect(() => {
-    isReadyForPost && postFormToServer();
-  }, [isReadyForPost]);
+    setForm({ username: 'ab', password: 'cd' });
+  }, []);
 
-  const customPasswordValidation = (value: string): boolean => {
-    return value.length >= 6
+  function customPasswordValidation(value: string): boolean {
+    return !(value.toLowerCase() === value || value.toUpperCase() === value);
   }
 
-  const postFormToServer = () => {
+  function postFormToServer() {
     console.log("Sending form: ", form);
   }
 
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <TextInput
         minLength={3}
+        maxLength={7}
         containerStyle={containerStyle}
         containerErrorStyle={containerErrorStyle}
         labelStyle={labelStyle}
@@ -29,7 +30,7 @@ const App = () => {
         inputErrorStyle={inputErrorStyle}
         errorMessageStyle={errorMessageStyle}
         label="Username"
-        value={form.username?.value}
+        value={form.username}
         isDirty={isDirty}
         onChange={handleInputChange}
         name="username" />
@@ -37,7 +38,7 @@ const App = () => {
         minLength={3}
         containerStyle={containerStyle}
         containerErrorStyle={containerErrorStyle}
-        customValidation={{ validator: customPasswordValidation, errorMessage: "Passwords must be atleast 6 characters long." }}
+        customValidation={{ validator: customPasswordValidation, errorMessage: "Passwords must contain at least one upper and one lower case letter" }}
         labelStyle={labelStyle}
         labelErrorStyle={labelErrorStyle}
         inputStyle={inputStyle}
@@ -46,13 +47,13 @@ const App = () => {
         isRequired
         isPassword
         label="Password"
-        value={form?.password?.value}
+        value={form.password}
         isDirty={isDirty}
         onChange={handleInputChange}
         name="password" />
-      <button onClick={handleSubmit}>Submit</button>
+      <button style={{ marginBlockEnd: '10px' }} onClick={handleSubmit}>Submit</button>
       <pre>{JSON.stringify(form)}</pre>
-    </>
+    </div>
   );
 }
 
@@ -62,7 +63,8 @@ const containerStyle = `
   display: flex;
   user-select: none;
   flex-direction: column;
-  font-family: 'Roobert TRIAL';
+  align-items: center;
+  font-family: 'Helvetica';
   margin-block-end: 10px;
 `;
 

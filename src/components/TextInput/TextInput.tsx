@@ -15,6 +15,7 @@ type Props = {
     errorMessageStyle?: Style,
     containerErrorStyle?: Style,
     minLength?: MinLength,
+    maxLength?: MaxLength,
     isRequired?: IsRequired,
     isPassword?: IsPassword,
     customValidation?: CustomValidation
@@ -25,6 +26,7 @@ type IsDirty = boolean;
 type IsRequired = boolean;
 type IsPassword = boolean;
 type MinLength = number;
+type MaxLength = number;
 type OnChangeFunction = (value: string, isValid: boolean, fieldName: string) => void;
 type Name = string;
 type Label = string;
@@ -37,12 +39,12 @@ const TextInput: React.FC<Props> = (props: Props) => {
 
     const [isValid, setIsValid] = useState<IsValid>(false);
     const [errorMessage, setErrorMessage] = useState<ErrorMessage>('');
+    const shouldShowError = !isValid && props.isDirty;
 
     useEffect(() => {
-        validate(props.value || '');
-    }, []);
+        props.value && props.onChange(props.value, validate(props.value), props.name);
+    }, [props.value]);
 
-    const shouldShowError = !isValid && props.isDirty;
 
     const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
         const inputValue = e.currentTarget.value;
@@ -53,19 +55,21 @@ const TextInput: React.FC<Props> = (props: Props) => {
         let tmpIsValid = false;
         let errorCause = '';
         let isRequiredValid = inputValue.length > 0;
-        let isMinLengthValid = inputValue.length >= (props.minLength || 0);
+        let isMinLengthValid = props.minLength ? inputValue.length >= props.minLength : true;
+        let isMaxLengthValid = props.maxLength ? inputValue.length < props.maxLength : true;
         let isCustomValid = props.customValidation ? props.customValidation.validator(inputValue) : true;
-        errorCause = getErrorCause(isRequiredValid, isMinLengthValid, isCustomValid);
+        errorCause = getErrorCause(isRequiredValid, isMinLengthValid, isMaxLengthValid, isCustomValid);
         errorCause && setErrorMessage(ERROR_MESSAGES[errorCause]);
         tmpIsValid = errorCause ? false : true;
         setIsValid(tmpIsValid);
         return tmpIsValid;
     }
 
-    const getErrorCause = (isRequiredValid: boolean, isMinLengthValid: boolean, isCustomValid: boolean): string => {
+    const getErrorCause = (isRequiredValid: boolean, isMinLengthValid: boolean, isMaxLengthValid: boolean, isCustomValid: boolean): string => {
         let errorCause = '';
         !isCustomValid && (errorCause = ERROR_CAUSES.custom);
         !isMinLengthValid && (errorCause = ERROR_CAUSES.minLength);
+        !isMaxLengthValid && (errorCause = ERROR_CAUSES.maxLength);
         !isRequiredValid && (errorCause = ERROR_CAUSES.isRequired);
         return errorCause;
     }
@@ -91,6 +95,7 @@ const TextInput: React.FC<Props> = (props: Props) => {
     const ERROR_MESSAGES = {
         isRequired: `Required Field`,
         minLength: `Must be at least ${props.minLength} characters long`,
+        maxLength: `Must be shorter than ${props.maxLength} characters`,
         custom: props.customValidation?.errorMessage
     };
 
@@ -111,6 +116,7 @@ const INPUT_TYPE = {
 const ERROR_CAUSES = {
     isRequired: 'isRequired',
     minLength: 'minLength',
+    maxLength: 'maxLength',
     custom: 'custom'
 }
 
