@@ -10,6 +10,10 @@
 npm install --save react-dirty-form
 ```
 
+## Demonstration
+
+![react-dirty-form demonstration](demo.gif)
+
 ## Usage
 
 ```tsx
