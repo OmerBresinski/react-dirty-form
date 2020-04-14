@@ -28,23 +28,29 @@ const App = () => {
     console.log("Sending form: ", form);
   }
 
+  const customPasswordValidation = (value: string): boolean => {
+    return value.length >= 6
+  }
+
   return (
     <div>
       <TextInput
         minLength={3}
         containerStyle={containerStyle}
         containerErrorStyle={containerErrorStyle}
+        customValidation={{ validator: customPasswordValidation, errorMessage: "Passwords must be atleast 6 characters long." }}
         labelStyle={labelStyle}
         labelErrorStyle={labelErrorStyle}
         inputStyle={inputStyle}
         inputErrorStyle={inputErrorStyle}
         errorMessageStyle={errorMessageStyle}
         isRequired
-        label="Username"
+        isPassword
+        label="Password"
         value={form?.username?.value}
         isDirty={isDirty}
         onChange={handleInputChange}
-        name="username" />
+        name="password" />
       <button onClick={handleSubmit}>Submit</button>
     </div>
   );
