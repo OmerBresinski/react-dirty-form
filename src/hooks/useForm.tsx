@@ -42,9 +42,9 @@ const useForm = (): FormHook => {
     }
 
     const getIsFormValid = () => {
-        let isValid = true;
+        let isValid: boolean | undefined = true;
         dirtyForm && Object.keys(dirtyForm).forEach(key => {
-            isValid = isValid && (dirtyForm[key].isValid || false);
+            isValid = isValid && (dirtyForm[key].isValid === undefined ? true : dirtyForm[key].isValid);
         });
         return isValid;
     }

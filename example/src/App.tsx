@@ -9,10 +9,6 @@ const App = () => {
     isReadyForPost && postFormToServer();
   }, [isReadyForPost]);
 
-  useEffect(() => {
-    setForm({ username: { value: 'omer' } });
-  }, []);
-
   const customPasswordValidation = (value: string): boolean => {
     return value.length >= 6
   }
@@ -55,6 +51,7 @@ const App = () => {
         onChange={handleInputChange}
         name="password" />
       <button onClick={handleSubmit}>Submit</button>
+      <pre>{JSON.stringify(form)}</pre>
     </>
   );
 }
