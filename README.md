@@ -13,15 +13,41 @@ npm install --save react-dirty-form
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
+import { useForm, TextInput } from 'react-dirty-form';
 
-import MyComponent from 'react-dirty-form'
-import 'react-dirty-form/dist/index.css'
+const App = () => {
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
+  const { form, isDirty, isReadyForPost, handleInputChange, handleSubmit } = useForm();
+
+  useEffect(() => {
+    isReadyForPost && postFormToServer();
+  }, [isReadyForPost]);
+
+  const postFormToServer = () => {
+    console.log("Sending form: ", form);
   }
+
+  return (
+    <>
+      <TextInput
+        minLength={3}
+        containerStyle={containerStyle}
+        containerErrorStyle={containerErrorStyle}
+        labelStyle={labelStyle}
+        labelErrorStyle={labelErrorStyle}
+        inputStyle={inputStyle}
+        inputErrorStyle={inputErrorStyle}
+        errorMessageStyle={errorMessageStyle}
+        isRequired
+        label="Username"
+        value={form?.username?.value}
+        isDirty={isDirty}
+        onChange={handleInputChange}
+        name="username" />
+      <button onClick={handleSubmit}>Submit</button>
+    </>
+  );
 }
 ```
 
