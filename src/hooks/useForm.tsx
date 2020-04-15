@@ -14,7 +14,7 @@ type HandleInputChange = (value: string, isValid: boolean, fieldName: string) =>
 type HandleSubmit = () => void;
 type PostFormToServer = () => void;
 type DirtyForm = { [key: string]: DirtyFormValue };
-type Form = { [key: string]: string | undefined };
+type Form = { [key: string]: string };
 type DirtyFormValue = {
     value: string,
     isValid: boolean
