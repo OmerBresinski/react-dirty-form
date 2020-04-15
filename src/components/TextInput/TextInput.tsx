@@ -31,7 +31,7 @@ const TextInput: React.FC<Props> = (props: Props) => {
     const shouldShowError = !isValid && props.isDirty;
 
     useEffect(() => {
-        props.form[props.name] !== undefined && props.onChange(props.form[props.name], validate(props.form[props.name]), props.name);
+        props.onChange(props.form[props.name], validate(props.form[props.name] ?? ''), props.name);
     }, [props.form[props.name]]);
 
 
@@ -109,4 +109,4 @@ const ERROR_CAUSES = {
     custom: 'custom'
 }
 
-export default TextInput;
+export default React.memo(TextInput);
