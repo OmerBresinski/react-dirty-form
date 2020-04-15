@@ -3,7 +3,7 @@ import { Container, LabelText, Input, ErrorMessage } from './style';
 
 type Props = {
     name: string,
-    value: string | undefined,
+    form: Form,
     isDirty: boolean,
     onChange: OnChangeFunction,
     label?: string,
@@ -20,7 +20,7 @@ type Props = {
     isPassword?: boolean,
     customValidation?: CustomValidation
 }
-
+type Form = { [key: string]: string };
 type OnChangeFunction = (value: string, isValid: boolean, fieldName: string) => void;
 type CustomValidation = { validator: (value: string) => boolean, errorMessage: string };
 
@@ -31,8 +31,8 @@ const TextInput: React.FC<Props> = (props: Props) => {
     const shouldShowError = !isValid && props.isDirty;
 
     useEffect(() => {
-        props.value !== undefined && props.onChange(props.value, validate(props.value), props.name);
-    }, [props.value]);
+        props.form[props.name] !== undefined && props.onChange(props.form[props.name], validate(props.form[props.name]), props.name);
+    }, [props.form[props.name]]);
 
 
     const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -90,8 +90,8 @@ const TextInput: React.FC<Props> = (props: Props) => {
 
     return (
         <Container customStyle={getContainerStyle()}>
-            <LabelText customStyle={getLabelStyle()}>{props.label}</LabelText>
-            <Input type={props.isPassword ? INPUT_TYPE.password : INPUT_TYPE.text} customStyle={getInputStyle()} value={props.value} onChange={handleChange} />
+            {props.label && <LabelText customStyle={getLabelStyle()}>{props.label}</LabelText>}
+            <Input type={props.isPassword ? INPUT_TYPE.password : INPUT_TYPE.text} customStyle={getInputStyle()} value={props.form[props.name]} onChange={handleChange} />
             {shouldShowError && <ErrorMessage customStyle={props.errorMessageStyle}>{errorMessage}</ErrorMessage>}
         </Container>
     );

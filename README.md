@@ -2,7 +2,8 @@
 
 > A form input component library
 
-[![NPM](https://img.shields.io/npm/v/react-dirty-form.svg)](https://www.npmjs.com/package/react-dirty-form) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-dirty-form.svg)](https://www.npmjs.com/package/react-dirty-form)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -41,7 +42,7 @@ const App = () => {
       <TextInput
         name="username"
         isDirty={isDirty}
-        value={form.username}
+        form={form}
         onChange={handleInputChange}
         minLength={3}
         maxLength={12}
@@ -56,7 +57,7 @@ const App = () => {
       <TextInput
         name="password"
         isDirty={isDirty}
-        value={form.password}
+        form={form}
         onChange={handleInputChange}
         minLength={3}
         containerStyle={containerStyle}
