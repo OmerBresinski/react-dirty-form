@@ -33,7 +33,7 @@ const TextInput: React.FC<Props> = (props: Props) => {
 
     useEffect(() => {
         !isLoaded && props.onChange(props.value, validate(props.value || ''), props.name);
-        setIsLoaded(true);
+        typeof props.value === 'string' && setIsLoaded(true);
     }, [props.value]);
 
 
