@@ -22,7 +22,7 @@ const App = () => {
       <TextInput
         name="username"
         isDirty={isDirty}
-        form={form}
+        value={form.username}
         onChange={handleInputChange}
         minLength={3}
         maxLength={12}
@@ -37,7 +37,7 @@ const App = () => {
       <TextInput
         name="password"
         isDirty={isDirty}
-        form={form}
+        value={form.password}
         onChange={handleInputChange}
         minLength={3}
         containerStyle={containerStyle}

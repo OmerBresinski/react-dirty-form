@@ -3,7 +3,7 @@ import { Container, LabelText, Input, ErrorMessage } from './style';
 
 type Props = {
     name: string,
-    form: Form,
+    value: string,
     isDirty: boolean,
     onChange: OnChangeFunction,
     label?: string,
@@ -20,19 +20,21 @@ type Props = {
     isPassword?: boolean,
     customValidation?: CustomValidation
 }
-type Form = { [key: string]: string };
+type MemoProps = { [key: string]: any, name: string };
 type OnChangeFunction = (value: string, isValid: boolean, fieldName: string) => void;
 type CustomValidation = { validator: (value: string) => boolean, errorMessage: string };
 
 const TextInput: React.FC<Props> = (props: Props) => {
 
     const [isValid, setIsValid] = useState<boolean>(false);
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const shouldShowError = !isValid && props.isDirty;
 
     useEffect(() => {
-        props.onChange(props.form[props.name], validate(props.form[props.name] ?? ''), props.name);
-    }, [props.form[props.name]]);
+        !isLoaded && props.onChange(props.value, validate(props.value || ''), props.name);
+        setIsLoaded(true);
+    }, [props.value]);
 
 
     const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -91,7 +93,7 @@ const TextInput: React.FC<Props> = (props: Props) => {
     return (
         <Container customStyle={getContainerStyle()}>
             {props.label && <LabelText customStyle={getLabelStyle()}>{props.label}</LabelText>}
-            <Input type={props.isPassword ? INPUT_TYPE.password : INPUT_TYPE.text} customStyle={getInputStyle()} value={props.form[props.name]} onChange={handleChange} />
+            <Input type={props.isPassword ? INPUT_TYPE.password : INPUT_TYPE.text} customStyle={getInputStyle()} value={props.value} onChange={handleChange} />
             {shouldShowError && <ErrorMessage customStyle={props.errorMessageStyle}>{errorMessage}</ErrorMessage>}
         </Container>
     );
@@ -109,4 +111,14 @@ const ERROR_CAUSES = {
     custom: 'custom'
 }
 
-export default React.memo(TextInput);
+const areEqual = (prevProps: MemoProps, nextProps: MemoProps) => {
+    let isValid = true;
+    Object.keys(prevProps).forEach((key: string) => {
+        key !== 'customValidation' ?
+            isValid = isValid && (prevProps[key] === nextProps[key]) :
+            isValid = isValid && (prevProps[key].toString() === nextProps[key].toString());
+    });
+    return isValid;
+}
+
+export default React.memo(TextInput, areEqual);

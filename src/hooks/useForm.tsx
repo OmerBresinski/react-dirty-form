@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 type FormHook = {
     form: Form,
@@ -24,11 +24,9 @@ const useForm = (postFormToServer: PostFormToServer): FormHook => {
     const [dirtyForm, setDirtyForm] = useState<DirtyForm | null>(null);
     const [isDirty, setIsDirty] = useState(false);
 
-    const handleInputChange: HandleInputChange = (value: string, isValid: boolean, fieldName: string) => {
-        const tempForm = { ...dirtyForm };
-        tempForm[fieldName] = { value: value, isValid: isValid };
-        setDirtyForm(tempForm);
-    }
+    const handleInputChange: HandleInputChange = useCallback((value: string, isValid: boolean, fieldName: string) => {
+        setDirtyForm(f => { return { ...f, [fieldName]: { value: value, isValid: isValid } } });
+    }, []);
 
     const handleSubmit = () => {
         setIsDirty(true);
