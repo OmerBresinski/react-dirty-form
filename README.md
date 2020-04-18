@@ -137,6 +137,16 @@ const errorMessageStyle = `
 `;
 ```
 
+## JSX Structure - Text Input
+
+```tsx
+<Container>
+  <LabelText>{props.label}</LabelText>
+  <Input value={props.value}/>
+  <ErrorMessage>{errorMessage}</ErrorMessage>
+</Container>
+```
+
 ## License
 
 MIT © [omerbresinski](https://github.com/omerbresinski)
